@@ -79,12 +79,25 @@ function remove(id) {
         });
 };
 
-function addStep(step) {
+function addStep(step, scheme_id) {
     return db('steps')
-        .insert(step, "id")
+        .insert(step, scheme_id)
+        .where({ scheme_id })
         .then(ids => {
             const [id] = ids;
 
             return findById(id);
         });
 };
+
+// function addStep(step, scheme_id) {
+//     const { step_number, instructions } = step
+//     return db('steps').insert({ step_number, instructions}).then(([id]) => findStepById(id))
+// }
+
+// function removeStep(schemeId, stepNumber) {
+//     return db('steps')
+//     .where({scheme_id: schemeId})
+//     .andWhere({step_number: stepNumber})
+//     .delete()
+// } 
